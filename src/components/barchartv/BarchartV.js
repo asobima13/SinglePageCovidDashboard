@@ -6,20 +6,20 @@ import { useEffect } from 'react'
 
 export default function BarchartV({data, title, subtitle}) {
 
-    // let datum = [["Time", "Confirmed", "Deaths", "Recovered", "Active"]]
+    let datum = []
 
-    // const pushDatum = () => {
-    //     data.map((e) => {
-    //         const {Date, Confirmed, Deaths, Recovered, Active} = e
-    //         // if (i<7)
-    //         datum.push([tanggal(Date), Confirmed, Deaths, Recovered, Active])
-    //     })
-    //     console.log(datum)
-    // }
+    datum.push(["Time", "Confirmed", "Deaths", "Recovered", "Active"])
+    const pushDatum = () => {
+        data.map((e) => {
+            const {Date, Confirmed, Deaths, Recovered, Active} = e
+            // if (i<7)
+            datum.push([tanggal(Date), Confirmed, Deaths, Recovered, Active])
+        })
+    }
 
-    // useEffect(() => {
-    //     pushDatum()
-    // },[datum])
+    useEffect(() => {
+        pushDatum()
+    },[datum])
 
     return (
         <div className="barchartV">
@@ -28,7 +28,7 @@ export default function BarchartV({data, title, subtitle}) {
                 height={'300px'}
                 chartType="Bar"
                 loader={<div>Loading Chart</div>}
-                data={data ? data : dataWeek}
+                data={dataWeek}
                 options={{
                     // Material design options
                     chart: {
