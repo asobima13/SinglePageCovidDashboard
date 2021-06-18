@@ -1,0 +1,33 @@
+.topbar {
+    /* width: 100%;
+    position: sticky; */
+    /* background-color: rgb(70, 236, 248); */
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.topbarWrapper {
+    display: flex;
+    justify-content: space-between;
+}
+
+.topRight {
+    display: flex;
+    flex-direction: row;
+}
+
+/* .topRight>h3 {
+    font-family: "Dancing Script", cursive;
+    font-weight: 700;
+} */
+
+.title {
+    font-size: 20px;
+    margin: 20px 40px;
+    color: rgb(16, 118, 185);
+    cursor: pointer;
+}
