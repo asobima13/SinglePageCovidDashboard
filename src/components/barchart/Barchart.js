@@ -8,6 +8,7 @@ export default function Barchart({data, title, titlebawah, titlesamping}) {
         const {Country_Region, Confirmed} = e.attributes
         if (i<10)
         datum.push([Country_Region, Confirmed])
+        return;
     })
 
     return (

@@ -1,7 +1,7 @@
 import './BarchartV.css'
 import Chart from "react-google-charts"
 import { tanggal } from '../../MyFunc'
-import { dataWeek } from '../../DummyData'
+// import { dataWeek } from '../../DummyData'
 import { useEffect } from 'react'
 
 export default function BarchartV({data, title, subtitle}) {
@@ -14,7 +14,9 @@ export default function BarchartV({data, title, subtitle}) {
             const {Date, Confirmed, Deaths, Recovered, Active} = e
             // if (i<7)
             datum.push([tanggal(Date), Confirmed, Deaths, Recovered, Active])
+            return;
         })
+        return;
     }
 
     useEffect(() => {
@@ -28,7 +30,7 @@ export default function BarchartV({data, title, subtitle}) {
                 height={'300px'}
                 chartType="Bar"
                 loader={<div>Loading Chart</div>}
-                data={dataWeek}
+                data={data}
                 options={{
                     // Material design options
                     chart: {

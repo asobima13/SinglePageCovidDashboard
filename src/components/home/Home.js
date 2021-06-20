@@ -5,7 +5,7 @@ import BarchartV from '../barchartv/BarchartV'
 import { tanggalWaktu, tanggal } from '../../MyFunc'
 import axios from 'axios'
 import { useState, useEffect } from 'react'
-import { dataIndonesia, dataWW } from '../../DummyData'
+import { dataIndonesia, dataWW, dataWeek } from '../../DummyData'
 
 export default function Home() {
 
@@ -52,7 +52,7 @@ export default function Home() {
             <div className="homeWrapper">
                 <Piechart data={dataindo} title="Covid-19 Cases in Indonesia"/>
                 <Barchart data={dataWW} title="Top 10 Confirmed Covid-19 Countries" titlesamping="Country" titlebawah="Total Confirmed"/>
-                <BarchartV data={dataBarchartV} title="Last 7 Days Covid-19 Cases in Indonesia" subtitle="Confirmed, Deaths, Recovered, Active cases in the last 7 days."/>
+                <BarchartV data={dataWeek} title="Last 7 Days Covid-19 Cases in Indonesia" subtitle="Confirmed, Deaths, Recovered, Active cases in the last 7 days."/>
             </div>
         </div>
     )
