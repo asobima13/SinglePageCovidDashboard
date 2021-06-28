@@ -1,0 +1,104 @@
+import './Home.css'
+import Piechart from '../piechart/Piechart'
+import Barchart from '../barchart/Barchart'
+import BarchartV from '../barchartv/BarchartV'
+import { tanggalWaktu } from '../../MyFunc'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+
+export default function Home() {
+
+    const lastUpdate = tanggalWaktu(new Date())
+    const [homeData, setHomeData] = useState({
+        piechart: null,
+        barchart: null,
+        barchartV: null
+    })
+
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         const piechartAPI = 'http://localhost:5000/cases'
+    //         const barchartAPI = 'http://localhost:5000/top10'
+    //         const barchartVAPI = 'http://localhost:5000/last7'
+    //         const getPiechart = await axios.get(piechartAPI)
+    //         const getBarchart = await axios.get(barchartAPI)
+    //         const getBarchartV = await axios.get(barchartVAPI)
+
+    //         axios.all([getPiechart, getBarchart, getBarchartV])
+    //             .then(axios.spread((...allData) => {
+    //                 setHomeData({
+    //                     piechart: allData[0],
+    //                     barchart: allData[1],
+    //                     barchartV: allData[2]
+    //                 })
+    //                 console.log(homeData)
+    //             }))
+    //             .catch((err) => {
+    //                 console.error(err)
+    //             })
+    //     }
+    //     fetchData()
+    // }, [homeData]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            // const piechartAPI = 'http://localhost:5000/cases'
+            const covid19api = 'http://localhost:5000/covid19api'
+            const kawalapi = 'http://localhost:5000/kawalapi'
+            // const barchartVAPI = 'http://localhost:5000/last7'
+            // const barchartAPI = 'http://localhost:5000/top10'
+            // const getPiechart = await fetch(piechartAPI)
+            // const getBarchartV = await fetch(barchartVAPI)
+            // const getBarchart = await fetch(barchartAPI)
+
+            const covid19 = await axios.get(covid19api)
+            const kawal = await axios.get(kawalapi)
+
+            axios.all([covid19, kawal])
+                .then((allData) => {
+                    setHomeData({
+                        piechart: allData[0].data[0],
+                        barchartV: allData[0].data[1],
+                        barchart: allData[1]
+                    })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
+            }
+            fetchData()
+            console.log(homeData)
+    }, [homeData]);
+
+    // useEffect(() => {   
+          
+    //     const dataFetch = async () => {
+
+    //         // const res = await fetch('https://api.covid19api.com/country/indonesia')
+	// 	    // const result = await axios.get('https://api.kawalcorona.com')
+    //         try {
+    //             await fetch('http://localhost:5000/top10')
+    //                 .then(res => res.json())
+    //                 .then(
+    //                     (result) => console.log(result)
+    //                 )
+    //         } catch (err) {
+    //             console.error(err)
+    //         }
+    //     }
+    //     dataFetch()
+    // }, [])
+
+    return (
+        <div className="home">
+            <div className="lastUpdate">
+                <span>Last Update: {lastUpdate} WIB</span>
+            </div>
+            <div className="homeWrapper">
+                <Piechart data={homeData.piechart} title="Covid-19 Cases in Indonesia"/>
+                <Barchart data={homeData.barchart} title="Top 10 Confirmed Covid-19 Countries" titlesamping="Country" titlebawah="Total Confirmed"/>
+                <BarchartV data={homeData.barchartV} title="Last 7 Days Covid-19 Cases in Indonesia" subtitle="Confirmed, Deaths, Recovered, Active cases in the last 7 days."/>
+            </div>
+        </div>
+    )
+}

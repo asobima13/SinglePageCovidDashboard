@@ -1,39 +1,29 @@
 import './Piechart.css'
 import Chart from "react-google-charts"
-
+import { useState, useEffect } from 'react'
 export default function Piechart({data, title}) {
 
-    const datum = [['Status', 'Total']]
-    const dat = data[0].attributes
+    const [appState, setAppState] = useState({loading: true, data: null})
 
-    Object.getOwnPropertyNames(dat).map((val) => {
-        // console.log(val)
-        if (val === "Confirmed")
-            datum.push([`${val} :
-            ${dat[val]}`, dat[val]])
-        if (val === "Deaths")
-            datum.push([`${val} :
-            ${dat[val]}`, dat[val]])
-        if (val === "Recovered")
-            datum.push([`${val} :
-            ${dat[val]}`, dat[val]])
-        if (val === "Active")
-            datum.push([`${val} :
-            ${dat[val]}`, dat[val]])
-        // if (val !== ("Last_Update"||"Country_Region"||"Lat"||"Long_"||"OBJECTID")) {
-        //     datum.push([`${val} : ${dat[val]}`, dat[val]])
-        //     console.log(val)
-        // }
-    })
+    useEffect(() => {
+        setAppState({loading: true})
+        let datum = [['Status', 'Total']]
+        if (data) {
+            data.map((e) => datum.push(e))
+            setAppState({data: datum, loading: false})
+        }
+    }, [data]);
 
-    return (
-        <div className="piechart">
+return (
+    <div className="piechart">
+        {  appState.loading ?
+            <p>Data is being fetched..</p> :
             <Chart
             width={'500px'}
             height={'300px'}
             chartType="PieChart"
             loader={<div>Loading Chart</div>}
-            data={datum}
+            data={appState.data}
             options={{
                 title: title,
                 is3D: false,
@@ -42,8 +32,9 @@ export default function Piechart({data, title}) {
                 pieSliceText: 'label',
                 // sliceVisibilityThreshold: 0.2, // 20%
             }}
-            // rootProps={{ 'data-testid': '1' }}
             />
-        </div>
-    )
+        // rootProps={{ 'data-testid': '1' }}
+        }
+    </div>
+)
 }

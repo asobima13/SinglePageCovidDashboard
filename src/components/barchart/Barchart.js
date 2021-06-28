@@ -1,37 +1,45 @@
 import './Barchart.css'
 import Chart from "react-google-charts"
+import { useState, useEffect } from 'react'
 
 export default function Barchart({data, title, titlebawah, titlesamping}) {
 
-    let datum = [[titlesamping, titlebawah]]
-    data.map((e,i) => {
-        const {Country_Region, Confirmed} = e.attributes
-        if (i<10)
-        datum.push([Country_Region, Confirmed])
-        return;
-    })
+    const [appState, setAppState] = useState({loading: true, data: null})
+    
+    useEffect(() => {
+        setAppState({loading: true})
+        let datum = [[titlesamping, titlebawah]];
+        if (data) {
+            data.map((e) => datum.push(e))
+            setAppState({data: datum, loading: false})
+        }
+    },[data, titlebawah, titlesamping])
 
     return (
         <div className="barchart">
-            <Chart
-                width={'500px'}
-                height={'300px'}
-                chartType="BarChart"
-                loader={<div>Loading Chart</div>}
-                data={datum}
-                options={{
-                    title: title,
-                    chartArea: { width: '50%' },
-                    hAxis: {
-                    title: titlebawah,
-                    minValue: 0,
-                    },
-                    vAxis: {
-                    title: titlesamping,
-                    },
-                    legend: 'none'
-                }}
-            />
+            {
+                appState.loading ?
+                <p>Data is being fetched..</p> :
+                <Chart
+                    width={'500px'}
+                    height={'300px'}
+                    chartType="BarChart"
+                    loader={<div>Loading Chart</div>}
+                    data={appState.data}
+                    options={{
+                        title: title,
+                        chartArea: { width: '50%' },
+                        hAxis: {
+                        title: titlebawah,
+                        minValue: 0,
+                        },
+                        vAxis: {
+                        title: titlesamping,
+                        },
+                        legend: 'none'
+                    }}
+                />
+            }
         </div>
     )
 }

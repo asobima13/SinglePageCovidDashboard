@@ -1,44 +1,41 @@
 import './BarchartV.css'
 import Chart from "react-google-charts"
 import { tanggal } from '../../MyFunc'
-// import { dataWeek } from '../../DummyData'
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 export default function BarchartV({data, title, subtitle}) {
 
-    let datum = []
-
-    datum.push(["Time", "Confirmed", "Deaths", "Recovered", "Active"])
-    const pushDatum = () => {
-        data.map((e) => {
-            const {Date, Confirmed, Deaths, Recovered, Active} = e
-            // if (i<7)
-            datum.push([tanggal(Date), Confirmed, Deaths, Recovered, Active])
-            return;
-        })
-        return;
-    }
+    const [appState, setAppState] = useState({loading: true, data: null})
 
     useEffect(() => {
-        pushDatum()
-    },[datum])
+        setAppState({loading: true})
+        let datum = [["Time", "Confirmed", "Deaths", "Recovered", "Active"]]
+        if (data) {
+            data.map((e) => datum.push([tanggal(e[0]), e[1], e[2], e[3], e[4]]))
+            setAppState({data: datum, loading: false})
+        }
+    },[data])
 
     return (
         <div className="barchartV">
-            <Chart
-                width={'800px'}
-                height={'300px'}
-                chartType="Bar"
-                loader={<div>Loading Chart</div>}
-                data={data}
-                options={{
-                    // Material design options
-                    chart: {
-                    title: title,
-                    subtitle: subtitle,
-                    },
-                }}
-            />
+            {
+                appState.loading ?
+                <p>Data is being fetched...</p> :
+                <Chart
+                    width={'800px'}
+                    height={'300px'}
+                    chartType="Bar"
+                    loader={<div>Loading Chart</div>}
+                    data={appState.data}
+                    options={{
+                        // Material design options
+                        chart: {
+                        title: title,
+                        subtitle: subtitle,
+                        },
+                    }}
+                />
+            }
         </div>
     )
 }
