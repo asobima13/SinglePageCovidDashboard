@@ -36,10 +36,10 @@ export default function Home() {
                         const {Date, Confirmed, Deaths, Recovered, Active} = e
                         if (i === allData[0].data.length - 1) {
                             datum1.push(
-                                [`Confirmed: ${Confirmed}`, Confirmed],
-                                [`Deaths: ${Deaths}`, Deaths],
-                                [`Recovered: ${Recovered}`, Recovered],
-                                [`Active: ${Active}`, Active]
+                                [`Confirmed: ${Confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, Confirmed],
+                                [`Deaths: ${Deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, Deaths],
+                                [`Recovered: ${Recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, Recovered],
+                                [`Active: ${Active.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`, Active]
                             )
                         }
                         if (i > allData[0].data.length - 8) {
