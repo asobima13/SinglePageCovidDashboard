@@ -31,8 +31,8 @@ export default function BarchartV({data, title, subtitle}) {
                     options={{
                         // Material design options
                         chart: {
-                        title: title,
-                        subtitle: subtitle,
+                            title: title,
+                            subtitle: subtitle,
                         },
                     }}
                 />
