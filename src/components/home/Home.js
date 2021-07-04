@@ -5,6 +5,8 @@ import BarchartV from '../barchartv/BarchartV'
 import { tanggalWaktu } from '../../MyFunc'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
+const dotenv = require('dotenv')
+dotenv.config()
 
 export default function Home() {
 
@@ -18,11 +20,8 @@ export default function Home() {
     useEffect(() => {
         const fetchData = async () => {
 
-            const indoapi = 'https://api.covid19api.com/country/indonesia'
-            const globalapi = 'https://api.covid19api.com/summary'
-
-            const getIndo = await axios.get(indoapi)
-            const getGlobal = await axios.get(globalapi)
+            const getIndo = await axios.get(process.env.REACT_APP_INDO_API)
+            const getGlobal = await axios.get(process.env.REACT_APP_GLOBAL_API)
 
             await axios.all([getIndo, getGlobal])
                 .then((allData) => {

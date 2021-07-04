@@ -1,6 +1,8 @@
 import './Piechart.css'
 import Chart from "react-google-charts"
 import { useState, useEffect } from 'react'
+import { CircularProgress } from '@material-ui/core'
+
 export default function Piechart({data, title}) {
 
     const [appState, setAppState] = useState({loading: true, data: null})
@@ -17,7 +19,7 @@ export default function Piechart({data, title}) {
 return (
     <div className="piechart">
         {  appState.loading ?
-            <p>Data is being fetched..</p> :
+            <CircularProgress /> :
             <Chart
             width={'500px'}
             height={'300px'}

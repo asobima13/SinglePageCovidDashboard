@@ -2,6 +2,7 @@ import './BarchartV.css'
 import Chart from "react-google-charts"
 import { tanggal } from '../../MyFunc'
 import { useState, useEffect } from 'react'
+import { CircularProgress } from '@material-ui/core'
 
 export default function BarchartV({data, title, subtitle}) {
 
@@ -20,7 +21,7 @@ export default function BarchartV({data, title, subtitle}) {
         <div className="barchartV">
             {
                 appState.loading ?
-                <p>Data is being fetched...</p> :
+                <CircularProgress /> :
                 <Chart
                     width={'800px'}
                     height={'300px'}
